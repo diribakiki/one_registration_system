@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Online School Registration portal</title>
+    
+    
+    
+    
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="login/css/style.css" type="text/css"/>
+        <link rel="stylesheet" href="login/css/style.css" type="text/css">
+
+
+
+<div align="center">
+			
+                       
+					<div class="entry"> <a href="#" class="image image-center">
+                                          <img src="images/i2.jpeg" alt="" /></a>
+					</div>
+					</div>	    
+    
+    
+  </head>
+
+  <body>
+      
+
+    <div class="wrapper">
+	<div class="container">
+		<h1>Welcome to online school registration portal</h1>
+		
+		<form action="http://localhost:8080/Online%20school%20registration%20system/login/LoginCheck.jsp" method="post" class="form" onsubmit="return validLogin();">
+                    <input type="text" name="username" required placeholder="username">
+			<input type="password" name="password" required placeholder="password">
+			<button type="submit" id="login-button">Login</button>
+                        
+		</form>
+                 <div class="login-help">
+    <a href="#">Register</a> • <a href="#">Forgot Password</a>
+  </div>
+</div>
+	</div>
+	
+	<ul class="bg-bubbles">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</div>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    
+
+        <script src="js/index.js"></script>
+     
+
+      <div class="col-3 col-md-3">
+                    <!--clock-->
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-4">
+                            <center> <canvas  id="canvas" width="180" height="180"
+                                     style="background-color:red;">
+                                </canvas></center>
+                        </div>
+                    </div>
+                    <br/>
+                    <!--notice board-->
+                    <button type="button" class="btn btn-secondary btn-lg btn-block">Notice Board</button>
+                    <div class="list-group">
+                        <c:forEach var="notices" items="${nts}">
+                            <a class="list-group-item list-group-item-action ">
+                                <div>
+                                    <h4>&Rrightarrow; ${notices.n_title}</h4>
+                                    <small>Publish Date: ${notices.publish_date}</small>
+                                </div>
+                            </a>
+                        </c:forEach> 
+                        <a class="list-group-item list-group-item-action " href="noticeBoard.htm">
+                            <div>
+                                <small style="padding-left: 40%">See More..</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            var radius = canvas.height / 2;
+            ctx.translate(radius, radius);
+            radius = radius * 0.90
+            setInterval(drawClock, 1000);
+
+            function drawClock() {
+                drawFace(ctx, radius);
+                drawNumbers(ctx, radius);
+                drawTime(ctx, radius);
+            }
+
+            function drawFace(ctx, radius) {
+                var grad;
+                ctx.beginPath();
+                ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+                grad = ctx.createRadialGradient(0, 0, radius * 0.95, 0, 0, radius * 1.05);
+                grad.addColorStop(0, '#333');
+                grad.addColorStop(0.5, 'white');
+                grad.addColorStop(1, '#333');
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = radius * 0.1;
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(0, 0, radius * 0.1, 0, 2 * Math.PI);
+                ctx.fillStyle = '#333';
+                ctx.fill();
+            }
+
+            function drawNumbers(ctx, radius) {
+                var ang;
+                var num;
+                ctx.font = radius * 0.15 + "px arial";
+                ctx.textBaseline = "middle";
+                ctx.textAlign = "center";
+                for (num = 1; num < 13; num++) {
+                    ang = num * Math.PI / 6;
+                    ctx.rotate(ang);
+                    ctx.translate(0, -radius * 0.85);
+                    ctx.rotate(-ang);
+                    ctx.fillText(num.toString(), 0, 0);
+                    ctx.rotate(ang);
+                    ctx.translate(0, radius * 0.85);
+                    ctx.rotate(-ang);
+                }
+            }
+
+            function drawTime(ctx, radius) {
+                var now = new Date();
+                var hour = now.getHours();
+                var minute = now.getMinutes();
+                var second = now.getSeconds();
+                //hour
+                hour = hour % 12;
+                hour = (hour * Math.PI / 6) +
+                        (minute * Math.PI / (6 * 60)) +
+                        (second * Math.PI / (360 * 60));
+                drawHand(ctx, hour, radius * 0.5, radius * 0.07);
+                //minute
+                minute = (minute * Math.PI / 30) + (second * Math.PI / (30 * 60));
+                drawHand(ctx, minute, radius * 0.8, radius * 0.07);
+                // second
+                second = (second * Math.PI / 30);
+                drawHand(ctx, second, radius * 0.9, radius * 0.02);
+            }
+
+            function drawHand(ctx, pos, length, width) {
+                ctx.beginPath();
+                ctx.lineWidth = width;
+                ctx.lineCap = "round";
+                ctx.moveTo(0, 0);
+                ctx.rotate(pos);
+                ctx.lineTo(0, -length);
+                ctx.stroke();
+                ctx.rotate(-pos);
+            }
+
+
+            
+        </script>
+    
+    
+  </body>
+</html>
+
